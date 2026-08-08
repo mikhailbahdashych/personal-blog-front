@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.github
+.claude
+.env
+.env.*
+!.env.example
+CLAUDE.md
+README.md
+*.log

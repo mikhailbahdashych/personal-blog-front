@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { getSiteConfig } from '@/lib/api';
+import { baseMetadata } from '@/lib/seo';
 import '@/styles/globals.css';
 
 // Every route renders on request; data comes from Next's tag-invalidated fetch
@@ -39,13 +40,7 @@ const THEME_SCRIPT = `(function(){var t;try{t=localStorage.getItem('theme')}catc
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getSiteConfig();
-  return {
-    title: {
-      default: config.seoDefaultTitle,
-      template: '%s · Mikhail Bahdashych',
-    },
-    description: config.seoDefaultDescription,
-  };
+  return baseMetadata(config);
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {

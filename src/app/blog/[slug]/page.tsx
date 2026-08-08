@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PostDetail } from '@/components/post-detail';
 import { getPost } from '@/lib/api';
+import { postMetadata } from '@/lib/seo';
 import 'katex/dist/katex.min.css';
 import '@/styles/prose.css';
 
@@ -12,10 +13,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
-  return {
-    title: post.seoTitle ?? post.title,
-    description: post.seoDescription ?? post.excerpt,
-  };
+  return postMetadata(post);
 }
 
 export default async function BlogPostPage({ params }: Props) {
