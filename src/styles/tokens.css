@@ -1,0 +1,45 @@
+/* Design tokens from the mockup (Blog Mockup.dc.html). The theme is set as
+   data-theme on <html> by an inline script before first paint. Code blocks stay
+   dark in BOTH themes by design. */
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #fbfaf7;
+  --text: #1c1c1a;
+  --body: #33322e;
+  --secondary: #6f6a5e;
+  --muted: #8a8578;
+  --faint: #c9c5b8;
+  --border: #e4e1d8;
+  --surface: #ffffff;
+  --chip: #f1efe8;
+  --wash: #f5f3ec;
+  --code-bg: #14171a;
+  --link-tint: #b8b2a2;
+  --highlight: #f3e8c8;
+  --danger: #b3261e;
+  --success: #2f6b3a;
+  --scrim: rgba(28, 28, 26, 0.18);
+  --popup-shadow: 0 16px 48px rgba(28, 28, 26, 0.22);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #141412;
+  --text: #e8e6df;
+  --body: #c9c4b8;
+  --secondary: #a09a8c;
+  --muted: #8f897b;
+  --faint: #55524a;
+  --border: #2e2c27;
+  --surface: #1e1d1a;
+  --chip: #26241f;
+  --wash: #1e1d1a;
+  --code-bg: #101113;
+  --link-tint: #6e685c;
+  --highlight: #514727;
+  --danger: #e5534b;
+  --success: #57ab5a;
+  --scrim: rgba(0, 0, 0, 0.5);
+  --popup-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
