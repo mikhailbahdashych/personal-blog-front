@@ -1,53 +1,23 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022",
-    "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "types": [],
-    "baseUrl": "./",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@components/*": [
-        "src/app/components/*",
-        "src/app/components/basic-components/*",
-        "src/app/components/layout-components/*",
-        "src/app/components/pages-components/*"
-      ],
-      "@pages/*": ["src/app/pages/*"],
-      "@services/*": ["src/app/services/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@assets/*": ["src/assets/*"],
-      "@environments/*": ["src/environments/*"],
-      "@interface/*": ["src/app/shared/interfaces/*"],
-      "@guards/*": ["src/app/guards/*"],
-      "@enums/*": ["src/app/shared/enums/*"],
-      "@layouts/*": ["src/app/layouts/*"],
-      "@animations/*": ["src/app/shared/animations/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "angularCompilerOptions": {
-    "enableIvy": false,
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
