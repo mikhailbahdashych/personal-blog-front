@@ -1,3 +1,5 @@
+export const PER_PAGE_OPTIONS = [10, 25, 50] as const;
+
 /** '2026-07-14T09:00:00Z' -> '2026-07-14'. Published content must have a date. */
 export function fmtDate(iso: string | null): string {
   if (!iso) {

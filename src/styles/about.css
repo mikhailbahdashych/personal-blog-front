@@ -1,0 +1,353 @@
+/* About / CV page (mockup screen 4c). */
+
+.about-head {
+  margin-top: 52px;
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  background: var(--chip);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--muted);
+  overflow: hidden;
+  flex: none;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-intro {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-h1 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.about-lede {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--body);
+}
+
+.about-lede a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--link-tint);
+  text-underline-offset: 3px;
+}
+
+.contact-line {
+  margin-top: 24px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.contact-muted {
+  color: var(--muted);
+}
+
+.contact-line .sep {
+  color: var(--faint);
+}
+
+.contact-social {
+  display: inline-flex;
+  gap: 14px;
+}
+
+.contact-line a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--link-tint);
+  text-underline-offset: 3px;
+}
+
+.contact-line a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* --- Sections ---------------------------------------------------------------- */
+
+.section-head {
+  margin-top: 44px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.section-head h2 {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+/* --- Timelines --------------------------------------------------------------- */
+
+.timeline {
+  margin-top: 28px;
+}
+
+.timeline-entry {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0 22px;
+}
+
+.timeline-icon-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  overflow: hidden;
+  flex: none;
+}
+
+.logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edu-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.connector {
+  width: 2px;
+  flex: 1;
+  background: var(--border);
+  min-height: 24px;
+}
+
+.timeline-entry:last-child .connector {
+  display: none;
+}
+
+.timeline-body {
+  padding-bottom: 36px;
+  min-width: 0;
+}
+
+.timeline-entry:last-child .timeline-body {
+  padding-bottom: 0;
+}
+
+.timeline-entry.education .timeline-body {
+  padding-bottom: 28px;
+}
+
+.timeline-entry.education:last-child .timeline-body {
+  padding-bottom: 0;
+}
+
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.role-line {
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.degree-line {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.role-line a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--link-tint);
+  text-underline-offset: 3px;
+}
+
+.role-line a:hover {
+  text-decoration-color: var(--text);
+}
+
+.entry-meta {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  flex: none;
+}
+
+.role-blurb {
+  margin-top: 5px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.edu-notes {
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--secondary);
+}
+
+.entry-bullets {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+
+.entry-bullets li {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--body);
+}
+
+.entry-bullets li + li {
+  margin-top: 8px;
+}
+
+.entry-bullets strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.skill-row {
+  margin-top: 14px;
+}
+
+/* --- Certifications ----------------------------------------------------------- */
+
+.cert-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-head {
+    margin-top: 40px;
+  }
+}
+
+.cert-tile {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cert-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cert-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: var(--chip);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--muted);
+  overflow: hidden;
+  flex: none;
+}
+
+.cert-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cert-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.cert-name a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--link-tint);
+  text-underline-offset: 3px;
+}
+
+.cert-name a:hover {
+  text-decoration-color: var(--text);
+}
+
+.cert-desc {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--secondary);
+}
+
+.cert-foot {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+}
