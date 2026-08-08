@@ -1,6 +1,14 @@
 import { notFound } from 'next/navigation';
 import { requireEnv } from './env';
-import type { About, Post, PostList, PostType, SiteConfig, SlugEntry } from './types';
+import type {
+  About,
+  Post,
+  PostList,
+  PostType,
+  SearchResults,
+  SiteConfig,
+  SlugEntry,
+} from './types';
 
 /**
  * Server-side API access. Every route is rendered dynamically (see the root
@@ -42,4 +50,16 @@ export function getAbout(): Promise<About> {
 
 export function getSlugs(): Promise<SlugEntry[]> {
   return apiFetch('/posts/slugs', ['posts']);
+}
+
+/** Search results are never cached — every query hits the API. */
+export async function searchServer(q: string, page: number, per: number): Promise<SearchResults> {
+  const params = new URLSearchParams({ q, page: String(page), per: String(per) });
+  const res = await fetch(`${requireEnv('API_INTERNAL_URL')}/api/search?${params}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    throw new Error(`API /search responded ${res.status}`);
+  }
+  return res.json() as Promise<SearchResults>;
 }
