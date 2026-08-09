@@ -25,6 +25,7 @@ import type { VFile } from 'vfile';
  *   horizontally scrollable container.
  * - H2 headings define the table of contents (slug ids from rehype-slug).
  * - Raw HTML is NOT rendered — it stays escaped text.
+ * - Link and image URLs are restricted to safe schemes (see rehypeSafeUrls).
  */
 
 export interface TocEntry {
@@ -42,6 +43,43 @@ const isElement = (node: ElementContent | RootContent | undefined, tag?: string)
 
 const isWhitespace = (node: ElementContent | RootContent | undefined): boolean =>
   !!node && node.type === 'text' && node.value.trim() === '';
+
+/**
+ * Strip link/image URLs that carry an executable scheme.
+ *
+ * remark-rehype does not filter URLs, so `[x](javascript:alert(1))` otherwise
+ * survives into the rendered href even though raw HTML is escaped. Anything
+ * without a scheme (relative paths, fragments, query-only) is left alone; a URL
+ * with a scheme has to be on the allowlist to be kept.
+ */
+const SAFE_URL_SCHEMES = new Set(['http:', 'https:', 'mailto:', 'tel:']);
+const URL_ATTRIBUTES: Record<string, string> = { a: 'href', img: 'src', image: 'href' };
+
+function isSafeUrl(value: string): boolean {
+  // Browsers drop whitespace and control characters while parsing a URL, so
+  // `java\tscript:alert(1)` still executes. Drop everything up to and including
+  // U+0020 before reading the scheme; over-stripping only ever fails closed.
+  const bare = Array.from(value)
+    .filter((char) => char.codePointAt(0)! > 0x20)
+    .join('');
+  const scheme = /^([a-z][a-z0-9+.-]*):/i.exec(bare);
+  return scheme === null || SAFE_URL_SCHEMES.has(scheme[1].toLowerCase() + ':');
+}
+
+function rehypeSafeUrls() {
+  return (tree: Root) => {
+    visit(tree, 'element', (node: Element) => {
+      const attribute = URL_ATTRIBUTES[node.tagName];
+      if (!attribute) {
+        return;
+      }
+      const value = node.properties[attribute];
+      if (typeof value === 'string' && !isSafeUrl(value)) {
+        delete node.properties[attribute];
+      }
+    });
+  };
+}
 
 /** `![alt](url "Caption")` alone in a paragraph -> <figure><img/><figcaption/></figure> */
 function rehypeFigures() {
@@ -162,6 +200,7 @@ const processor = unified()
   .use(rehypeTableCaptions)
   .use(rehypeTableWrap)
   .use(rehypeFigures)
+  .use(rehypeSafeUrls)
   .use(collectToc)
   .use(rehypeStringify);
 

@@ -84,4 +84,36 @@ describe('renderMarkdown', () => {
     expect(html).not.toContain('<img');
     expect(html).toContain('hello');
   });
+  it('strips executable URL schemes from links and images (XSS regression)', async () => {
+    // Raw HTML is dropped by remark-rehype, but markdown link syntax reaches the
+    // href untouched — rehypeSafeUrls is what stops `javascript:` there.
+    for (const md of [
+      '[c](javascript:alert(1))',
+      '[c](JaVaScRiPt:alert(1))',
+      '[c](  javascript:alert(1))',
+      '[c](vbscript:msgbox(1))',
+      '[c](data:text/html;base64,PHNjcmlwdD4=)',
+      '![i](javascript:alert(1))',
+    ]) {
+      const { html } = await renderMarkdown(md);
+      expect(html).not.toContain('javascript:');
+      expect(html).not.toContain('vbscript:');
+      expect(html).not.toContain('data:text/html');
+      expect(html).not.toMatch(/<(a|img)[^>]*\s(href|src)=/);
+    }
+  });
+
+  it('keeps the URLs a post legitimately needs', async () => {
+    const { html } = await renderMarkdown(
+      '[a](https://example.com) [b](/blog/post) [c](#anchor) [d](mailto:x@y.co)\n\n' +
+        '![e](https://bucket.s3.eu-central-1.amazonaws.com/uploads/2026/08/a-b_c.png)',
+    );
+    expect(html).toContain('href="https://example.com"');
+    expect(html).toContain('href="/blog/post"');
+    expect(html).toContain('href="#anchor"');
+    expect(html).toContain('href="mailto:x@y.co"');
+    expect(html).toContain(
+      'src="https://bucket.s3.eu-central-1.amazonaws.com/uploads/2026/08/a-b_c.png"',
+    );
+  });
 });
