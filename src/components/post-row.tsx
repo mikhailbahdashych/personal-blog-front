@@ -1,14 +1,12 @@
 import Link from 'next/link';
-import type { CSSProperties } from 'react';
 import { fmtDate, fmtYear } from '@/lib/format';
 import type { PostListItem } from '@/lib/types';
 
-export function PostRow({ post, index = 0 }: { post: PostListItem; index?: number }) {
+export function PostRow({ post }: { post: PostListItem }) {
   const href = post.type === 'article' ? `/blog/${post.slug}` : `/projects/${post.slug}`;
 
   return (
-    // --i drives the stagger in the reveal animation (see globals.css).
-    <article className="post-row reveal" style={{ '--i': index } as CSSProperties}>
+    <article className="post-row">
       <div>
         <Link href={href} className="post-title">
           {post.title}

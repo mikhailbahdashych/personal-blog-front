@@ -25,8 +25,8 @@ export default async function HomePage() {
           </Link>
         </div>
         <div className="post-list">
-          {articles.items.map((post, index) => (
-            <PostRow key={post.slug} post={post} index={index} />
+          {articles.items.map((post) => (
+            <PostRow key={post.slug} post={post} />
           ))}
         </div>
       </section>
@@ -39,8 +39,8 @@ export default async function HomePage() {
           </Link>
         </div>
         <div className="post-list">
-          {projects.items.map((post, index) => (
-            <PostRow key={post.slug} post={post} index={index} />
+          {projects.items.map((post) => (
+            <PostRow key={post.slug} post={post} />
           ))}
         </div>
       </section>

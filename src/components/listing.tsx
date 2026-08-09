@@ -39,9 +39,9 @@ export async function Listing({ type, title, basePath, page, per }: Props) {
         <EmptyState>Nothing here yet.</EmptyState>
       ) : (
         <>
-          <div className="post-list listing">
-            {list.items.map((post, index) => (
-              <PostRow key={post.slug} post={post} index={index} />
+          <div className="post-list listing reveal">
+            {list.items.map((post) => (
+              <PostRow key={post.slug} post={post} />
             ))}
           </div>
           <Pagination basePath={basePath} total={list.total} page={page} per={per} />
