@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import { PostRow } from '@/components/post-row';
 import { getFeatured, getSiteConfig } from '@/lib/api';
 
@@ -11,10 +12,12 @@ export default async function HomePage() {
 
   return (
     <>
-      <h1 className="hero-title">{config.heroTitle}</h1>
-      <p className="hero-intro">{config.heroIntroMd}</p>
+      <h1 className="hero-title reveal">{config.heroTitle}</h1>
+      <p className="hero-intro reveal" style={{ '--i': 1 } as CSSProperties}>
+        {config.heroIntroMd}
+      </p>
 
-      <section className="home-section">
+      <section className="home-section reveal" style={{ '--i': 2 } as CSSProperties}>
         <div className="section-row">
           <h2 className="micro-label">Featured articles</h2>
           <Link href="/blog" className="all-link">
@@ -22,8 +25,8 @@ export default async function HomePage() {
           </Link>
         </div>
         <div className="post-list">
-          {articles.items.map((post) => (
-            <PostRow key={post.slug} post={post} />
+          {articles.items.map((post, index) => (
+            <PostRow key={post.slug} post={post} index={index} />
           ))}
         </div>
       </section>
@@ -36,8 +39,8 @@ export default async function HomePage() {
           </Link>
         </div>
         <div className="post-list">
-          {projects.items.map((post) => (
-            <PostRow key={post.slug} post={post} />
+          {projects.items.map((post, index) => (
+            <PostRow key={post.slug} post={post} index={index} />
           ))}
         </div>
       </section>

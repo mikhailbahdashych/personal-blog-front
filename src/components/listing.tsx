@@ -40,8 +40,8 @@ export async function Listing({ type, title, basePath, page, per }: Props) {
       ) : (
         <>
           <div className="post-list listing">
-            {list.items.map((post) => (
-              <PostRow key={post.slug} post={post} />
+            {list.items.map((post, index) => (
+              <PostRow key={post.slug} post={post} index={index} />
             ))}
           </div>
           <Pagination basePath={basePath} total={list.total} page={page} per={per} />
