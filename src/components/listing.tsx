@@ -39,7 +39,7 @@ export async function Listing({ type, title, basePath, page, per }: Props) {
         <EmptyState>Nothing here yet.</EmptyState>
       ) : (
         <>
-          <div className="post-list listing">
+          <div className="post-list listing reveal">
             {list.items.map((post) => (
               <PostRow key={post.slug} post={post} />
             ))}

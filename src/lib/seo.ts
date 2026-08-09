@@ -34,7 +34,9 @@ export function baseMetadata(config: {
       title: config.seoDefaultTitle,
       description: config.seoDefaultDescription,
     },
-    icons: { icon: '/favicon.svg' },
+    // No `icons` override: src/app/icon.svg is picked up by Next's file
+    // convention and linked with a content hash. Naming a path here pointed at
+    // /favicon.svg, which does not exist — every page 404'd and shipped no icon.
   };
 }
 

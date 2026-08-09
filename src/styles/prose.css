@@ -12,12 +12,26 @@
   margin-top: 24px;
 }
 
+/*
+ * H2s are numbered to match the table of contents. The number is generated
+ * rather than authored so the two can never drift, and so heading ids stay
+ * clean (#the-audience-claim-problem, not #1-the-audience-claim-problem).
+ */
+.prose {
+  counter-reset: prose-section;
+}
+
 .prose h2 {
   margin-top: 40px;
   font-family: var(--font-sans);
   font-size: 19px;
   font-weight: 600;
   color: var(--text);
+  counter-increment: prose-section;
+}
+
+.prose h2::before {
+  content: counter(prose-section) '. ';
 }
 
 .prose h2 + * {
@@ -222,6 +236,12 @@
   font-size: 13px;
   color: var(--body);
   text-decoration: none;
+}
+
+.toc-num {
+  margin-right: 6px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .toc-list a:hover {
