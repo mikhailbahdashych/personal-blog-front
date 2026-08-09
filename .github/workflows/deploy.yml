@@ -78,7 +78,10 @@ jobs:
           echo "${{ secrets.EC2_SSH_HOST_KEY }}" > ~/.ssh/known_hosts
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes \
             "${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}" \
-            'cd /opt/blog && docker compose pull front && docker compose up -d front && docker image prune -f'
+            'cd /opt/blog \
+             && docker compose -f docker-compose.prod.yml pull front \
+             && docker compose -f docker-compose.prod.yml up -d front \
+             && docker image prune -f'
       - name: Revoke SSH access
         if: always()
         run: |
