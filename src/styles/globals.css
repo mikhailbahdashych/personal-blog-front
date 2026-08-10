@@ -163,6 +163,30 @@ h3 {
 
 /* --- Home ------------------------------------------------------------------- */
 
+/* Home is the one wide page: hero + terminal on the left, featured listings on
+ * the right. The shell only stretches when it holds the home grid, so every
+ * other page keeps the 716px column. Browsers without :has() simply keep home
+ * narrow too — the grid below collapses to one column inside it. */
+.shell:has(.home-grid) {
+  max-width: 1180px;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 72px;
+  align-items: start;
+}
+
+/* First label on the right sits level with the hero title's first line. */
+.home-side {
+  margin-top: 62px;
+}
+
+.home-side .home-section:first-child {
+  margin-top: 0;
+}
+
 .hero-title {
   margin-top: 52px;
   font-family: var(--font-serif);
@@ -173,8 +197,26 @@ h3 {
   color: var(--text);
 }
 
-.hero-intro {
+/* Intro paragraph with the resident ASCII cat keeping watch beside it. */
+.hero-lede {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
   margin-top: 20px;
+}
+
+.hero-pet {
+  flex: none;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--secondary);
+  white-space: pre;
+  user-select: none;
+}
+
+.hero-intro {
   font-size: 14px;
   line-height: 1.7;
   color: var(--secondary);
@@ -187,6 +229,24 @@ h3 {
 
 .home-section + .home-section {
   margin-top: 40px;
+}
+
+/* Below the split point, home reads like every other page again:
+ * hero → terminal → featured, in one 716px column. */
+@media (max-width: 1023px) {
+  .home-grid {
+    display: block;
+    max-width: 716px;
+    margin-inline: auto;
+  }
+
+  .home-side {
+    margin-top: 0;
+  }
+
+  .home-side .home-section:first-child {
+    margin-top: 44px;
+  }
 }
 
 .section-row {
