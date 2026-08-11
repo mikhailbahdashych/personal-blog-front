@@ -1,11 +1,13 @@
-import type { Metadata } from 'next';
 import { IBM_Plex_Sans, IBM_Plex_Serif, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { Footer } from '@/components/footer';
-import { Header } from '@/components/header';
-import { getSiteConfig } from '@/lib/api';
-import { baseMetadata } from '@/lib/seo';
 import '@/styles/globals.css';
+
+/**
+ * Deliberately API-free: fonts, theme and global styles only. Everything that
+ * needs the API (site config, header, footer) lives in the (site) layout, so
+ * routes outside that group — /maintenance above all — still render while the
+ * API is down mid-deploy.
+ */
 
 // Every route renders on request; data comes from Next's tag-invalidated fetch
 // cache (see lib/api.ts), so builds never require a running API.
@@ -38,14 +40,7 @@ const mono = JetBrains_Mono({
 // no flash of the wrong theme.
 const THEME_SCRIPT = `(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)})()`;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const config = await getSiteConfig();
-  return baseMetadata(config);
-}
-
-export default async function RootLayout({ children }: { children: ReactNode }) {
-  const config = await getSiteConfig();
-
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
@@ -54,11 +49,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     >
       <body>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-        <div className="shell">
-          <Header />
-          <main>{children}</main>
-          <Footer config={config} />
-        </div>
+        {children}
       </body>
     </html>
   );

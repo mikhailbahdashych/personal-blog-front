@@ -390,7 +390,53 @@ h3 {
   text-underline-offset: 3px;
 }
 
-/* --- Empty state (search empty, 404) ---------------------------------------- */
+/* --- Status pages (404, maintenance) ----------------------------------------- */
+
+.status-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 88px 0 48px;
+}
+
+/* No header above the maintenance card; give it the room the header left. */
+.status-page-tall {
+  padding-top: 22vh;
+}
+
+.status-art {
+  margin: 0 0 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--secondary);
+  white-space: pre;
+  user-select: none;
+}
+
+.status-code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.status-title {
+  margin: 10px 0 12px;
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.status-text {
+  font-size: 14px;
+  color: var(--body);
+  max-width: 46ch;
+}
+
+/* --- Empty state (search empty, bare listings) ------------------------------- */
 
 .empty-state {
   margin-top: 32px;
