@@ -76,12 +76,16 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           echo "${{ secrets.EC2_SSH_HOST_KEY }}" > ~/.ssh/known_hosts
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes \
+          # GHCR auth: this run's short-lived GITHUB_TOKEN piped over stdin, so
+          # the host never stores a static PAT.
+          echo "${{ secrets.GITHUB_TOKEN }}" | ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes \
             "${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}" \
-            'cd /opt/blog \
+            'docker login ghcr.io -u ${{ github.actor }} --password-stdin \
+             && cd /opt/blog \
              && docker compose -f docker-compose.prod.yml pull front \
              && docker compose -f docker-compose.prod.yml up -d front \
-             && docker image prune -f'
+             && docker image prune -f \
+             && docker logout ghcr.io'
       - name: Revoke SSH access
         if: always()
         run: |
