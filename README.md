@@ -1,4 +1,4 @@
-# personal-blog-front
+# Personal Blog Front
 
 Public blog for [mikhailbahdashych.me](https://mikhailbahdashych.me) — Next.js (App Router, SSR).
 
@@ -10,10 +10,12 @@ Part of a three-repo system: **personal-blog-front** (this), `personal-blog-api`
 - **Markdown** (`src/lib/markdown.ts`): unified/remark/rehype — GFM, KaTeX math, Shiki highlighting, figures + table captions + TOC. Runs server-side only.
 - **Theme**: `data-theme` on `<html>`, persisted in localStorage, system default, set by an inline pre-paint script (no flash).
 - **SEO**: server-rendered metadata (canonical, Open Graph, Twitter), JSON-LD (`BlogPosting`/`CreativeWork`), `sitemap.xml`, `robots.txt`, `rss.xml`, proper 404 status.
+- **Maintenance mode** (`src/middleware.ts`): every page request checks the API's `/api/maintenance` flag (uncached, 2s timeout) and redirects to `/maintenance` while it's on — including when the API is unreachable, so a dead backend degrades to the maintenance page instead of errors. Public pages live in the `(site)` route group whose layout does the API-backed chrome; `/maintenance` and the 404 render API-free.
+- **Fonts are vendored** (`src/fonts/`, `next/font/local`) so image builds never fetch from Google Fonts — CI runners get throttled there.
 
 ## Pages
 
-`/` home · `/blog` + `/projects` listings (pagination) · `/blog/[slug]` + `/projects/[slug]` detail · `/about` CV · `/search` results · 404.
+`/` home (with an interactive terminal) · `/blog` + `/projects` listings (pagination) · `/blog/[slug]` + `/projects/[slug]` detail · `/about` CV · `/search` results · `/maintenance` · 404.
 
 ## Development
 
@@ -43,4 +45,4 @@ npm run dev            # http://localhost:3000
 
 ## Deployment
 
-Multi-stage Docker image (standalone output) built by `.github/workflows/deploy.yml` → GHCR → SSH deploy into the EC2 compose stack. Infra lives in the API repo's [`deploy/`](https://github.com/mikhailbahdashych/personal-blog-api/tree/master/deploy).
+Multi-stage Docker image (standalone output) built by `.github/workflows/deploy.yml` → GHCR → SSH deploy into the EC2 compose stack. All infrastructure (Terraform, compose stack, nginx) lives in [personal-blog-infrastructure](https://github.com/mikhailbahdashych/personal-blog-infrastructure).
