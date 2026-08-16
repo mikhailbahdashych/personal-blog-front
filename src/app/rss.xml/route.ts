@@ -1,4 +1,4 @@
-import { getPosts } from '@/lib/api';
+import { getPosts, getSiteConfig } from '@/lib/api';
 import { siteUrl } from '@/lib/seo';
 
 const escapeXml = (value: string): string =>
@@ -20,7 +20,7 @@ const escapeXml = (value: string): string =>
 export async function GET() {
   const base = siteUrl();
   // The blog feed covers articles; projects are portfolio items, not feed posts.
-  const { items } = await getPosts('article', 1, 50);
+  const [{ items }, config] = await Promise.all([getPosts('article', 1, 50), getSiteConfig()]);
 
   const entries = items
     .map((post) => {
@@ -44,9 +44,9 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mikhail Bahdashych — Blog</title>
+    <title>${escapeXml(config.seoDefaultTitle)}</title>
     <link>${base}</link>
-    <description>Security engineering notes: detection engineering, cloud security, write-ups.</description>
+    <description>${escapeXml(config.seoDefaultDescription)}</description>
     <language>en</language>
     <atom:link href="${base}/rss.xml" rel="self" type="application/rss+xml" />
 ${entries}
