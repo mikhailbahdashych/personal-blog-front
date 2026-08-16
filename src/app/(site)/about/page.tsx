@@ -7,7 +7,9 @@ import '@/styles/about.css';
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getAbout();
   return {
-    title: about.seoTitle ?? `About — ${about.fullName}`,
+    // The site layout's title template already appends the name, so this is
+    // the page part only — 'About — <name>' here rendered it twice.
+    title: about.seoTitle ?? 'About',
     description: about.seoDescription ?? undefined,
   };
 }

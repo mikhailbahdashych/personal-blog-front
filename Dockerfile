@@ -25,9 +25,15 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends curl \
   && rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /app/.next/standalone ./
-COPY --from=build /app/.next/static ./.next/static
-COPY --from=build /app/public ./public
+COPY --from=build --chown=node:node /app/.next/standalone ./
+COPY --from=build --chown=node:node /app/.next/static ./.next/static
+COPY --from=build --chown=node:node /app/public ./public
+
+# The server writes rendered pages and fetch-cache entries under .next/cache at
+# runtime. Copied files land root-owned, so without this the unprivileged user
+# gets EACCES on every write and the whole data cache silently degrades to
+# fetching upstream on every request.
+RUN mkdir -p .next/cache && chown -R node:node .next
 
 USER node
 EXPOSE 3000
