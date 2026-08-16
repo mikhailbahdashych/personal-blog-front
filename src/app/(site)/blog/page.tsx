@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'Blog',
   description:
     'Security engineering write-ups: detection engineering, cloud security, incident notes.',
+  // Without this the page inherits the layout's canonical ('/') and tells
+  // search engines it is a duplicate of the home page.
+  alternates: { canonical: '/blog' },
 };
 
 interface Props {

@@ -3,9 +3,8 @@
 .about-head {
   margin-top: 52px;
   display: flex;
-  gap: 28px;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  gap: 22px;
+  align-items: center;
 }
 
 .avatar {
@@ -30,25 +29,31 @@
   object-fit: cover;
 }
 
-.about-intro {
-  flex: 1;
-  min-width: 300px;
-}
-
 .about-h1 {
   font-family: var(--font-serif);
   font-size: 28px;
   font-weight: 600;
   line-height: 1.3;
   color: var(--text);
+  text-wrap: balance;
 }
 
 .about-lede {
-  margin-top: 14px;
+  margin-top: 22px;
   font-family: var(--font-serif);
   font-size: 16px;
   line-height: 1.75;
   color: var(--body);
+  text-align: justify;
+  /* Justification without hyphenation opens rivers of whitespace once the
+     column narrows, so the two travel together everywhere on this page. */
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Markdown renders one <p> per paragraph; space them like article prose. */
+.about-lede > * + * {
+  margin-top: 20px;
 }
 
 .about-lede a {
@@ -229,6 +234,9 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--muted);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .edu-notes {
@@ -237,6 +245,9 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--secondary);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .entry-bullets {
@@ -249,6 +260,9 @@
   font-size: 13.5px;
   line-height: 1.65;
   color: var(--body);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .entry-bullets li + li {
@@ -278,8 +292,21 @@
     grid-template-columns: 1fr;
   }
 
+  /* Keep the avatar and greeting on one line: a full-size avatar leaves the
+     heading too little room and it used to wrap onto its own row entirely. */
   .about-head {
     margin-top: 40px;
+    gap: 16px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 18px;
+  }
+
+  .about-h1 {
+    font-size: 22px;
   }
 }
 
@@ -344,6 +371,9 @@
   font-size: 12.5px;
   line-height: 1.6;
   color: var(--secondary);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .cert-foot {
