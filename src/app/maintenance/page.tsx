@@ -6,9 +6,19 @@ import type { Metadata } from 'next';
  * purpose: it must render with zero API involvement — see the root layout.
  */
 
+/**
+ * This page declares no robots directive of its own. Its markup is served by
+ * the middleware at whatever URL was requested, so anything set here would be
+ * attached to real content URLs like /blog rather than to this page.
+ *
+ * Nothing is lost by leaving it off: Next emits `noindex` automatically on any
+ * response above 400, and search engines act on the 503 itself — a temporary
+ * status they retry — not on the body of an error response. The middleware
+ * guarantees this page is never served with a 200; with the flag off,
+ * /maintenance redirects home.
+ */
 export const metadata: Metadata = {
   title: { absolute: 'Back soon · Mikhail Bahdashych' },
-  robots: { index: false },
 };
 
 /** The resident, off duty. */
