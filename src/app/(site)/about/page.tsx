@@ -11,6 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
     // the page part only — 'About — <name>' here rendered it twice.
     title: about.seoTitle ?? 'About',
     description: about.seoDescription ?? undefined,
+    // Without this the page inherits the layout's canonical ('/') and tells
+    // search engines it is a duplicate of the home page.
+    alternates: { canonical: '/about' },
   };
 }
 
@@ -30,6 +33,8 @@ export default async function AboutPage() {
 
   return (
     <>
+      {/* Avatar and greeting share a row; the profile runs full width beneath
+          it, which keeps the text column readable down to phone widths. */}
       <div className="about-head">
         <span className="avatar">
           {about.avatarUrl ? (
@@ -38,11 +43,10 @@ export default async function AboutPage() {
             initials(about.fullName)
           )}
         </span>
-        <div className="about-intro">
-          <h1 className="about-h1">Hi, I&apos;m {firstName}.</h1>
-          <div className="about-lede" dangerouslySetInnerHTML={{ __html: profile.html }} />
-        </div>
+        <h1 className="about-h1">Hello, World! I&apos;m {firstName} 👋</h1>
       </div>
+
+      <div className="about-lede" dangerouslySetInnerHTML={{ __html: profile.html }} />
 
       <div className="contact-line">
         <span className="contact-muted">{about.location}</span>

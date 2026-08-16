@@ -413,6 +413,10 @@ h3 {
   color: var(--secondary);
   white-space: pre;
   user-select: none;
+  /* The page centers its children, and a centered <pre> centers each line
+     independently — which pulls the cat's ears off its face. The box is still
+     centered as a flex item; only the lines inside it align left. */
+  text-align: left;
 }
 
 .status-code {

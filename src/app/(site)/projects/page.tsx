@@ -4,6 +4,9 @@ import { Listing, parseListingParams } from '@/components/listing';
 export const metadata: Metadata = {
   title: 'Projects',
   description: 'Security tooling and infrastructure projects.',
+  // Without this the page inherits the layout's canonical ('/') and tells
+  // search engines it is a duplicate of the home page.
+  alternates: { canonical: '/projects' },
 };
 
 interface Props {
