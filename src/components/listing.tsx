@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { EmptyState } from '@/components/empty-state';
 import { Pagination } from '@/components/pagination';
 import { PostRow } from '@/components/post-row';
@@ -31,6 +32,10 @@ interface Props {
 
 export async function Listing({ type, title, basePath, page, per }: Props) {
   const list = await getPosts(type, page, per);
+  // Past the last page is a 404, not an empty 200 (a soft 404 to crawlers).
+  if (page > 1 && list.items.length === 0) {
+    notFound();
+  }
 
   return (
     <>

@@ -1,17 +1,21 @@
 import Link from 'next/link';
 import { JsonLd } from '@/components/json-ld';
 import { TocCard } from '@/components/toc-card';
-import { requireEnv } from '@/lib/env';
+import { getSiteConfig } from '@/lib/api';
 import { fmtDate, fmtYear } from '@/lib/format';
 import { renderMarkdown } from '@/lib/markdown';
+import { personJsonLd, siteUrl } from '@/lib/seo';
 import type { Post } from '@/lib/types';
 
 /** Shared template for article and project detail pages (mockup screen 4b). */
 export async function PostDetail({ post }: { post: Post }) {
-  const { html, toc } = await renderMarkdown(post.contentMd);
-  const siteUrl = requireEnv('NEXT_PUBLIC_SITE_URL');
+  const [{ html, toc }, config] = await Promise.all([
+    renderMarkdown(post.contentMd),
+    getSiteConfig(),
+  ]);
   const isArticle = post.type === 'article';
-  const url = `${siteUrl}/${isArticle ? 'blog' : 'projects'}/${post.slug}`;
+  const url = `${siteUrl()}/${isArticle ? 'blog' : 'projects'}/${post.slug}`;
+  const author = personJsonLd(config.socialLinks);
 
   const jsonLd = isArticle
     ? {
@@ -21,17 +25,18 @@ export async function PostDetail({ post }: { post: Post }) {
         description: post.excerpt,
         datePublished: post.publishedAt,
         dateModified: post.updatedAt,
-        author: { '@type': 'Person', name: 'Mikhail Bahdashych', url: siteUrl },
+        author,
         url,
+        mainEntityOfPage: url,
         ...(post.heroUrl ? { image: post.heroUrl } : {}),
       }
     : {
         '@context': 'https://schema.org',
-        '@type': 'CreativeWork',
+        '@type': 'SoftwareSourceCode',
         name: post.title,
         description: post.excerpt,
         url,
-        author: { '@type': 'Person', name: 'Mikhail Bahdashych', url: siteUrl },
+        author,
         ...(post.repoUrl ? { codeRepository: post.repoUrl } : {}),
       };
 

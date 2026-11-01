@@ -78,7 +78,7 @@
 .term-bar-title {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--t-dim);
+  color: var(--secondary); /* --t-dim fails AA on the chrome in both themes */
   letter-spacing: 0.02em;
   white-space: nowrap;
   overflow: hidden;

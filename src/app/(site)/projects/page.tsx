@@ -1,16 +1,18 @@
 import type { Metadata } from 'next';
 import { Listing, parseListingParams } from '@/components/listing';
-
-export const metadata: Metadata = {
-  title: 'Projects',
-  description: 'Security tooling and infrastructure projects.',
-  // Without this the page inherits the layout's canonical ('/') and tells
-  // search engines it is a duplicate of the home page.
-  alternates: { canonical: '/projects' },
-};
+import { listingCanonical, pageAlternates } from '@/lib/seo';
 
 interface Props {
   searchParams: Promise<{ page?: string; per?: string }>;
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const { page } = parseListingParams(await searchParams);
+  return {
+    title: 'Projects',
+    description: 'Security tooling and infrastructure projects.',
+    alternates: pageAlternates(listingCanonical('/projects', page)),
+  };
 }
 
 export default async function ProjectsPage({ searchParams }: Props) {

@@ -1,0 +1,4 @@
+Contact: mailto:personalblog.cardstock880@passmail.net
+Expires: 2027-10-31T23:00:00.000Z
+Preferred-Languages: en
+Canonical: https://mikhailbahdashych.me/.well-known/security.txt
