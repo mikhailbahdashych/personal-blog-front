@@ -11,6 +11,7 @@
   --muted: #8a8578;
   --faint: #c9c5b8;
   --border: #e4e1d8;
+  --grid: color-mix(in srgb, var(--border) 50%, transparent);
   --surface: #ffffff;
   --chip: #f1efe8;
   --wash: #f5f3ec;
@@ -25,13 +26,15 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #141412;
+  --bg: #0a0a0a;
   --text: #e8e6df;
   --body: #c9c4b8;
   --secondary: #a09a8c;
   --muted: #8f897b;
   --faint: #55524a;
   --border: #2e2c27;
+  /* Barely-there on dark, so the grid never competes with content. */
+  --grid: color-mix(in srgb, var(--border) 15%, transparent);
   --surface: #1e1d1a;
   --chip: #26241f;
   --wash: #1e1d1a;
