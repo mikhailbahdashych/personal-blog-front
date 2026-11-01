@@ -3,11 +3,9 @@ name: build-and-deploy
 on:
   push:
     branches: [master]
+  # PRs run the checks only; build and deploy are skipped (see `if:` below).
+  pull_request:
   workflow_dispatch:
-
-concurrency:
-  group: deploy-front
-  cancel-in-progress: false
 
 env:
   IMAGE: ghcr.io/${{ github.repository_owner }}/personal-blog-front
@@ -27,6 +25,8 @@ jobs:
 
   build:
     needs: test
+    # Checks only on pull requests; deploy needs build, so it skips with it.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -55,8 +55,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    # One deploy at a time; job-level so PR checks never queue behind a deploy.
+    concurrency:
+      group: deploy-front
+      cancel-in-progress: false
     steps:
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
