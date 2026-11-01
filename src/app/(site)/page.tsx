@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
+import { JsonLd } from '@/components/json-ld';
 import { PostRow } from '@/components/post-row';
 import { Terminal } from '@/components/terminal/terminal';
 import { buildTerminalData } from '@/components/terminal/vfs';
 import { getAbout, getFeatured, getSiteConfig, getSlugs } from '@/lib/api';
-import { siteUrl } from '@/lib/seo';
+import { SITE_NAME, siteUrl } from '@/lib/seo';
 import '@/styles/terminal.css';
 
 /** The resident. Decoration only, hence aria-hidden where it is rendered. */
@@ -33,6 +34,14 @@ export default async function HomePage() {
 
   return (
     <div className="home-grid">
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: SITE_NAME,
+          url: siteUrl(),
+        }}
+      />
       <div className="home-main">
         <h1 className="hero-title reveal">{config.heroTitle}</h1>
         <div className="hero-lede reveal" style={{ '--i': 1 } as CSSProperties}>

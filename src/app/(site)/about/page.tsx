@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { CertificationTile, EducationEntry, PositionEntry } from '@/components/cv';
+import { JsonLd } from '@/components/json-ld';
 import { getAbout, getSiteConfig } from '@/lib/api';
 import { renderMarkdown } from '@/lib/markdown';
+import { pageAlternates, personJsonLd } from '@/lib/seo';
 import '@/styles/about.css';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: about.seoDescription ?? undefined,
     // Without this the page inherits the layout's canonical ('/') and tells
     // search engines it is a duplicate of the home page.
-    alternates: { canonical: '/about' },
+    alternates: pageAlternates('/about'),
   };
 }
 
@@ -30,9 +32,23 @@ export default async function AboutPage() {
   const [about, config] = await Promise.all([getAbout(), getSiteConfig()]);
   const profile = await renderMarkdown(about.profileMd);
   const firstName = about.fullName.split(/\s+/)[0];
+  const current = about.positions.find((position) => position.endDate === null);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    mainEntity: {
+      ...personJsonLd(config.socialLinks),
+      ...(about.avatarUrl ? { image: about.avatarUrl } : {}),
+      ...(current
+        ? { jobTitle: current.title, worksFor: { '@type': 'Organization', name: current.company } }
+        : {}),
+    },
+  };
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       {/* Avatar and greeting share a row; the profile runs full width beneath
           it, which keeps the text column readable down to phone widths. */}
       <div className="about-head">

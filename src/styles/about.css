@@ -18,7 +18,7 @@
   font-family: var(--font-mono);
   font-size: 24px;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--secondary); /* --muted fails AA on --chip in the light theme */
   overflow: hidden;
   flex: none;
 }

@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   // so no request can reach sharp, instead of relying on remotePatterns being
   // empty to reject remote sources.
   images: { unoptimized: true },
+  // Next streams metadata into <body> for clients it believes run JS — Googlebot
+  // included — and Google only honours rel=canonical inside <head>. Every route
+  // already waits for its data before sending (no Suspense), so blocking on
+  // metadata costs nothing.
+  htmlLimitedBots: /.*/,
 };
 
 export default nextConfig;
