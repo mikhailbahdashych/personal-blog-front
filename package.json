@@ -18,7 +18,7 @@
   "dependencies": {
     "@shikijs/rehype": "^4.4.2",
     "hast-util-to-string": "^3.0.1",
-    "katex": "^0.16.47",
+    "katex": "^0.18.2",
     "next": "^16.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
