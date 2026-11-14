@@ -1,0 +1,14 @@
+# Mikhail Bahdashych
+
+> Personal site and blog of Mikhail Bahdashych, a security engineer working across GRC and compliance (ISO 27001, ISO 27701, SOC 2), security operations and AI security.
+
+## Pages
+
+- [About](https://mikhailbahdashych.me/about): work history, education and certifications
+- [Blog](https://mikhailbahdashych.me/blog): write-ups on security engineering
+- [Projects](https://mikhailbahdashych.me/projects): security tooling and infrastructure projects
+
+## Feeds
+
+- [RSS](https://mikhailbahdashych.me/rss.xml): all articles
+- [Sitemap](https://mikhailbahdashych.me/sitemap.xml): every public page
